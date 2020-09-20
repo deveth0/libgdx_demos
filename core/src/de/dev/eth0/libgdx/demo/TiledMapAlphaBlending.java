@@ -92,11 +92,8 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
     @Override
     public void draw() {
       Batch batch = getBatch();
-      Camera camera = getViewport().getCamera();
-      camera.update();
 
       frameBuffer.begin();
-      batch.setProjectionMatrix(camera.combined);
       // clear buffer with a nice dusk lightning color
       Gdx.gl.glClearColor(LIGHT_COLOR.r, LIGHT_COLOR.g, LIGHT_COLOR.b, LIGHT_COLOR.a);
       Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -110,10 +107,10 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
       batch.end();
       frameBuffer.end();
 
-      batch.setProjectionMatrix(camera.combined);
+      batch.setProjectionMatrix(getCamera().combined);
       getViewport().apply();
       batch.begin();
-      batch.draw(frameBuffer.getColorBufferTexture(), 0,frameBuffer.getHeight(), frameBuffer.getWidth(), -1 * frameBuffer.getHeight());
+      batch.draw(frameBuffer.getColorBufferTexture(), 0, frameBuffer.getHeight(), frameBuffer.getWidth(), -1 * frameBuffer.getHeight());
       batch.end();
     }
 
