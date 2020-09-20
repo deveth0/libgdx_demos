@@ -74,10 +74,10 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
    */
   static class AlphaBlendingMap extends Stage {
 
-    private final Color DAWN_COLOR = new Color(0f, 0f, 1f, 0.2f);
-    private final Color NIGHT_COLOR = new Color(0f, 0f, 0f, 0.2f);
-    private final Color DAY_COLOR = new Color(1f, 1f, 1f, 0f);
-    private final Color DUSK_COLOR = new Color(0.67f, 0.3f, 0.67f, 0.1f);
+    private final Color DAWN_COLOR = new Color(0f, 0f, 1f, 0.8f);
+    private final Color NIGHT_COLOR = new Color(0f, 0f, 0f, 0.4f);
+    private final Color DAY_COLOR = new Color(1f, 1f, 1f, 1f);
+    private final Color DUSK_COLOR = new Color(1f, 0.3f, 0.67f, 0.9f);
 
     private final List<Color> colors;
 
@@ -115,7 +115,7 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
 
       batch.enableBlending();
 
-      batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_DST_COLOR);
+      batch.setBlendFunction(GL20.GL_SRC_COLOR, GL20.GL_ONE_MINUS_SRC_COLOR);
 
       Matrix4 m = new Matrix4();
       m.setToOrtho2D(0, 0, frameBuffer.getWidth(), frameBuffer.getHeight());
@@ -128,7 +128,7 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
       batch.end();
       frameBuffer.end();
 
-      batch.setBlendFunction(GL20.GL_DST_COLOR, GL20.GL_SRC_ALPHA);
+      batch.setBlendFunction(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_SRC_ALPHA);
       batch.setProjectionMatrix(getCamera().combined);
       getViewport().apply();
 
