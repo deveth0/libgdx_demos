@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -84,7 +85,7 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
       addActor(getLightImage(1, 1, 2, 2));
       addActor(getLightImage(1, 1, 1, 3));
 
-      //TODO: IS THIS CORRECT? I assume the Framebuffer should have the size of the visible world
+      //TODO: IS THIS CORRECT? I assume the Framebuffer should have the size of world
       frameBuffer = new FrameBuffer(Pixmap.Format.RGBA8888, 4, 4, false);
     }
 
@@ -100,6 +101,9 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
       Gdx.gl.glClearColor(LIGHT_COLOR.r, LIGHT_COLOR.g, LIGHT_COLOR.b, LIGHT_COLOR.a);
       Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+      Matrix4 m = new Matrix4();
+      m.setToOrtho2D(0, 0, frameBuffer.getWidth(), frameBuffer.getHeight());
+      batch.setProjectionMatrix(m);
       // draw the actual lights
       batch.begin();
       getRoot().draw(batch, 1);
@@ -107,9 +111,10 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
       frameBuffer.end();
 
       Sprite frameBufferSprite = new Sprite(frameBuffer.getColorBufferTexture());
+      batch.setProjectionMatrix(camera.combined);
       getViewport().apply();
       batch.begin();
-      frameBufferSprite.draw(batch);
+      batch.draw(frameBuffer.getColorBufferTexture(), 0,frameBuffer.getWidth(), frameBuffer.getWidth(), -1 * frameBufferSprite.getRegionHeight());
       batch.end();
     }
 
