@@ -113,7 +113,7 @@ public class TiledMapAlphaBlending extends ApplicationAdapter {
       batch.setProjectionMatrix(camera.combined);
       getViewport().apply();
       batch.begin();
-      batch.draw(frameBuffer.getColorBufferTexture(), 0,frameBuffer.getWidth(), frameBuffer.getWidth(), -1 * frameBuffer.getHeight());
+      batch.draw(frameBuffer.getColorBufferTexture(), 0,frameBuffer.getHeight(), frameBuffer.getWidth(), -1 * frameBuffer.getHeight());
       batch.end();
     }
 
