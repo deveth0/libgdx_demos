@@ -1,10 +1,12 @@
-package de.dev.eth0.libgdx.demo;
+package de.dev.eth0.libgdx.demo.utils;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Controller that allows to drag a camera around
+ */
 public class OrthographicCameraController extends InputAdapter {
 
   private final OrthographicCamera camera;
@@ -14,6 +16,12 @@ public class OrthographicCameraController extends InputAdapter {
 
   public OrthographicCameraController(OrthographicCamera camera) {
     this.camera = camera;
+  }
+
+  @Override
+  public boolean scrolled(int amount){
+    camera.zoom = camera.zoom + (amount * 0.1f);
+    return false;
   }
 
   @Override
