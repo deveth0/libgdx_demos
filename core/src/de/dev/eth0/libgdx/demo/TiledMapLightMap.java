@@ -1,25 +1,17 @@
 package de.dev.eth0.libgdx.demo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -36,6 +28,7 @@ public class TiledMapLightMap extends ApplicationAdapter {
   private Viewport viewport;
 
   private Texture lightTexture;
+  private Matrix4 worldProjectionMatrix;
 
   private FrameBuffer frameBuffer;
 
@@ -59,6 +52,10 @@ public class TiledMapLightMap extends ApplicationAdapter {
     OrthographicCameraController cameraController = new OrthographicCameraController(camera);
     Gdx.input.setInputProcessor(cameraController);
 
+    // Matrix used to project onto the world
+    worldProjectionMatrix = new Matrix4();
+    worldProjectionMatrix.setToOrtho2D(0f,0f , WORLD_WIDTH, WORLD_HEIGHT);
+
     lightTexture=new Texture("light_forest.png");
   }
 
@@ -76,9 +73,7 @@ public class TiledMapLightMap extends ApplicationAdapter {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     // Project the Framebuffer size onto the World size
-    Matrix4 m = new Matrix4();
-    m.setToOrtho2D(0f,0f , WORLD_WIDTH, WORLD_HEIGHT);
-    batch.setProjectionMatrix(m);
+    batch.setProjectionMatrix(worldProjectionMatrix);
 
     // Render the lights
     batch.setBlendFunction(GL20.GL_ONE,GL20.GL_ZERO);
@@ -105,7 +100,6 @@ public class TiledMapLightMap extends ApplicationAdapter {
     // framebuffer is upside down, therefore we need to modify the y and height
     batch.draw(frameBuffer.getColorBufferTexture(),0,WORLD_HEIGHT, WORLD_WIDTH,-1* WORLD_HEIGHT);
     batch.end();
-
   }
 
   @Override
