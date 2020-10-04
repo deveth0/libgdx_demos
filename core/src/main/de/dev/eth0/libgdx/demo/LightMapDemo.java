@@ -2,6 +2,8 @@ package de.dev.eth0.libgdx.demo;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -16,7 +18,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
  *
  * Based on https://stackoverflow.com/a/45598754/2625592
  */
-public class LightMap extends ApplicationAdapter {
+public class LightMapDemo extends ApplicationAdapter {
 
   private FrameBuffer frameBuffer;
   private SpriteBatch spriteBatch;
@@ -70,6 +72,14 @@ public class LightMap extends ApplicationAdapter {
     spriteBatch.begin();
     spriteBatch.draw(frameBuffer.getColorBufferTexture(),-1,1,2,-2);
     spriteBatch.end();
+  }
+
+
+  public static void main(String[] arg) {
+    LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+    config.width = 400;
+    config.height = 400;
+    new LwjglApplication(new LightMapDemo(), config);
   }
 
 }

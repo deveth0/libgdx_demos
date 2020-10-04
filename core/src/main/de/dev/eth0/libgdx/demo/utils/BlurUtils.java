@@ -1,4 +1,4 @@
-package de.dev.eth0.libgdx.demo;
+package de.dev.eth0.libgdx.demo.utils;
 
 import java.nio.ByteBuffer;
 

@@ -3,7 +3,6 @@ package de.dev.eth0.libgdx.demo.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import de.dev.eth0.libgdx.demo.LightMap;
 import de.dev.eth0.libgdx.demo.TiledMapLightMap;
 
 public class DesktopLauncher {
